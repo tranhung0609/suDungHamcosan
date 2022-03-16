@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+<body>
+<center>
+    <h3>Caro Game Simple</h3>
+    <p id="board"></p>
+    <input type="button" value="Change Value" onclick="changeValue()">
+</center>
+<script>
+    let board = document.getElementById("board");
+    let size = 10;
+    let insertData = [];
+    let data = "";
+    for (let i = 0; i < 9; i++) {
+        insertData[i] = new Array("*","*","*","*","*","*","*","*","*");
+    }
+    for (let i = 0; i < 9; i++) {
+        data += "<br>";
+        for (let j = 0; j < 9; j++) {
+            data += insertData[i][j] + "&nbsp;&nbsp;";
+        }
+    }
+    board.innerHTML = data;
+    let turn = 0;
+    function changeValue() {
+        turn++;
+        let value = "";
+        let positionX = parseInt(prompt("Row: "));
+        let positionY = parseInt(prompt("Col: "));
+        if (insertData[positionX][positionY]!="*"){
+            alert("Vi tri da duoc danh!");
+            positionX = parseInt(prompt("Row: "));
+            positionY = parseInt(prompt("Col: "));
+        }
+        if (turn % 2){
+            value = "X";
+        } else {
+            value = "O";
+        }
+        insertData[positionX][positionY] = value;
+        data = "";
+        for (let i = 0; i < 9; i++) {
+            data += "<br>";
+            for (let j = 0; j < 9; j++) {
+                data += insertData[i][j] + "&nbsp;&nbsp;";
+            }
+        }
+        board.innerHTML = data;
+        if (ketThuc(positionX,positionY,value)){
+            alert("You win");
+        }
+    }
+    function ketThuc(x,y,str) {
+        return checkNgang(x,y,str)||checkDoc(x,y,str)||checkChinh(x,y,str)||checkPhu(x,y,str);
+    }
+    function checkNgang(x,y,str) {
+        let count  = 0;
+        for (let k = -2; k<=2; k++){
+            if (y+k>=0 && y+k<size) {
+                if (insertData[x][y+k] == str){
+                    count++;
+                } else if (count < 3) {
+                    count = 0;
+                }
+            }
+        }
+        if (count == 3) {
+            return true;
+        } else {
+            count = 0;
+            return false;
+        }
+    }
+    function checkDoc(x,y,str) {
+        let count  = 0;
+        for (let k = -2; k<=2; k++){
+            if (x+k>=0 && x+k<size) {
+                if (insertData[x+k][y] == str){
+                    count++;
+                } else if (count < 3) {
+                    count = 0;
+                }
+            }
+        }
+        if (count == 3) {
+            return true;
+        } else {
+            count = 0;
+            return false;
+        }
+    }
+    function checkChinh(x,y,str) {
+        let count  = 0;
+        for (let k = -2; k<=2; k++){
+            if (y+k>=0 && y+k<size && x+k>=0 && x+k<size) {
+                if (insertData[x+k][y+k] == str){
+                    count++;
+                } else if (count < 3) {
+                    count = 0;
+                }
+            }
+        }
+        if (count == 3) {
+            return true;
+        } else {
+            count = 0;
+            return false;
+        }
+    }
+    function checkPhu(x,y,str) {
+        let count  = 0;
+        for (let k = -2, j = 2; k<=2, j>=-2; k++, j--){
+            if (y+k>=0 && y+k<size && x+j>=0 && x+j<size) {
+                if (insertData[x+j][y+k] == str){
+                    count++;
+                } else if (count < 3) {
+                    count = 0;
+                }
+            }
+        }
+        if (count == 3) {
+            return true;
+        } else {
+            count = 0;
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

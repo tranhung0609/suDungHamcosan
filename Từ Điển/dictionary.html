@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+<body>
+<input id="input" type="text">
+<button onclick="button()">Translate</button>
+<div id="result"></div>
+<script>
+    let arrayVn = ["Bố","Mẹ","Anh","Chị","Bạn bè"]
+    let arrayJapan = ["父","母","兄","姉","友達"]
+    function button() {
+        let wordInput = document.getElementById("input").value
+        let flag = false
+        let index = 0
+        for (let i = 0; i < arrayJapan.length; i++){
+            if (wordInput === arrayJapan[i]){
+                flag = true
+                index = arrayVn[i]
+                break
+            }
+            if (wordInput === arrayVn[i]) {
+                flag = true
+                index = arrayJapan[i]
+                break
+            }
+        }
+        if (flag) {
+            document.getElementById("result"). innerHTML= "Kết quả : "+ index
+        } else  {
+            alert("Không tìm thấy kết quả")
+        }
+    }
+</script>
+</body>
+</html>
